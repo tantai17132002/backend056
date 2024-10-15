@@ -6,15 +6,14 @@ import {
   Param,
   UsePipes,
   UseGuards,
-  Request
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { validationPipeOptions } from '../user/validation.pipe.config';
 import { JwtAuthGuard } from './jwt.auth.guard';
-import { CustomUserRequest } from './request.interface'; 
+import { CustomUserRequest } from './request.interface';
 import { JwtPayload } from './user.interface';
-
 
 @Controller('user')
 export class UserController {
@@ -51,7 +50,7 @@ export class UserController {
       email: user.email,
       gender: user.gender,
       phonenumber: user.phonenumber,
-      age: user.age
+      age: user.age,
     };
   }
 
@@ -65,8 +64,6 @@ export class UserController {
   @Post('login')
   async login(@Body() body: { username: string; password: string }) {
     const token = await this.userService.login(body.username, body.password);
-    return {access_token: token} ; // Return token
+    return { access_token: token }; // Return token
   }
-
 }
-
