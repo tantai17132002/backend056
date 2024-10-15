@@ -25,7 +25,7 @@ export class UserController {
     return 'ok';
   }
 
-  @Post('create')
+  @Post('')
   // Use ValidationPipe
   @UsePipes(validationPipeOptions)
   async create(@Body() createUserDto: CreateUserDto) {
@@ -35,22 +35,9 @@ export class UserController {
   }
 
   // Endpoint to get list of users
-  @Get('list')
+  @Get()
   async list() {
     return await this.userService.findAll();
-  }
-
-  @Get(':id')
-  async getUserById(@Param('id') id: number) {
-    const user = await this.userService.findById(id);
-    return user;
-  }
-
-  // Endpoint for user login
-  @Post('login')
-  async login(@Body() body: { username: string; password: string }) {
-    const token = await this.userService.login(body.username, body.password);
-    return {access_token: token} ; // Return token
   }
 
   // New endpoint to get logged-in user's information
@@ -67,5 +54,19 @@ export class UserController {
       age: user.age
     };
   }
+
+  @Get(':id')
+  async getUserById(@Param('id') id: number) {
+    const user = await this.userService.findById(id);
+    return user;
+  }
+
+  // Endpoint for user login
+  @Post('login')
+  async login(@Body() body: { username: string; password: string }) {
+    const token = await this.userService.login(body.username, body.password);
+    return {access_token: token} ; // Return token
+  }
+
 }
 
